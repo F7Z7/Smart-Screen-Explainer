@@ -1,14 +1,16 @@
 {
   "name": "smart-screen-explainer",
   "version": "1.0.0",
+  "description": "A Chrome extension powered by AI",
   "main": "index.js",
   "scripts": {
+    "dev": "tsc --watch",
+    "build": "tsc",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "description": "",
   "devDependencies": {
     "typescript": "^5.9.2"
   }
