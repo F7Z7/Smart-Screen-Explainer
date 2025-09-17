@@ -1,5 +1,7 @@
 function openExtensions(): void {
     alert("clicked");
+
+    console.log("clicked here ")
 }
 
 document.addEventListener("DOMContentLoaded", () => {
