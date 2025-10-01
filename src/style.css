@@ -1,0 +1,12 @@
+body{
+    width: 400px;   /* desired width */
+    height: 500px;  /* desired height */
+    overflow: auto; /* allow scrolling if content exceeds */
+    padding: 10px;
+    box-sizing: border-box;
+    background-color: beige;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+}
