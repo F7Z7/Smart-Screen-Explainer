@@ -6,9 +6,6 @@
   "action": {
     "default_popup": "src/popup.html"
   },
-  "permissions": [
-    "storage"
-  ],
   "host_permissions": [
     "https://generativelanguage.googleapis.com/"
   ]
