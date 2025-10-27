@@ -1,3 +1,28 @@
+document.getElementById("saveKey")?.addEventListener("click", async () => {
+    const input = document.getElementById("apiKeyInput") as HTMLInputElement | null;
+    const button = document.getElementById("saveKey");
+    const key = (input?.value || "").trim();
+
+
+    if (!key) {
+        alert("Please enter a valid API key.");
+        return;
+    }
+    try {
+        await chrome.storage.local.set({ geminiApiKey: key });
+        alert("✅ API key saved successfully!");
+
+        // Optionally clear the UI
+        input?.remove();
+        button?.remove();
+
+        alert("api key saved successfully!");
+
+    } catch (err) {
+        console.error("Failed to save API key:", err);
+    }
+});
+
 async function captureScreenshot(): Promise<void> {
     try {
         const stream = await navigator.mediaDevices.getDisplayMedia({
@@ -25,9 +50,8 @@ async function captureScreenshot(): Promise<void> {
         img.style.maxWidth = "100%";  // scale down if huge
         img.style.border = "1px solid #ccc";
         document.body.appendChild(img);
-    }
-    catch (error) {
-        console.error("screenshot failed",error);
+    } catch (error) {
+        console.error("screenshot failed", error);
     }
 }
 
