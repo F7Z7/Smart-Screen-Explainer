@@ -132,3 +132,9 @@ button {
     border-color: #0078d7;
     box-shadow: 0 0 3px rgba(0,120,215,0.4);
 }
+.noImage{
+    display: none;
+}
+.displayImage{
+    display: block;
+}
