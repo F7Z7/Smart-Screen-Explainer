@@ -7,8 +7,17 @@
 <link rel="stylesheet" href="style.css">
 <body>
 <h1>Hello Extensions</h1>
-<input type="password" id="apiKeyInput" placeholder="Enter Gemini API Key" />
+<input type="password" id="apiKeyInput" placeholder="Enter Gemini API Key"/>
 <button id="saveKey">Save</button>
+<div class="explainationTone">
+    <label for="personalitySelect">Choose the tone for explanation</label>
+    <select id="personalitySelect">
+        <option value="default">Default</option>
+        <option value="eli5">Explain like I'm 5</option>
+        <option value="teacher">Teacher</option>
+        <option value="sarcastic">Sarcastic</option>
+    </select>
+</div>
 <button id="btn">Take Screenshot</button>
 <div class="explanation">
     <div id="explanation-container"></div>
