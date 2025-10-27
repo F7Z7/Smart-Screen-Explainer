@@ -9,8 +9,8 @@ document.getElementById("saveKey")?.addEventListener("click", async () => {
         return;
     }
     try {
-        await chrome.storage.local.set({ geminiApiKey: key });
-        alert("✅ API key saved successfully!");
+        await chrome.storage.local.set({geminiApiKey: key});
+        alert("API key saved successfully!");
 
         // Optionally clear the UI
         input?.remove();
@@ -47,8 +47,23 @@ async function captureScreenshot(): Promise<void> {
         const imgUrl = canvas.toDataURL("image/png");
         const img = document.createElement("img");
         img.src = imgUrl;
-        img.style.maxWidth = "100%";  // scale down if huge
+        img.style.maxWidth = "100%";
         img.style.border = "1px solid #ccc";
+
+        const personalitySelect = document.getElementById("personalitySelect") as HTMLSelectElement;
+        const selectedTone = personalitySelect?.value || "default";
+
+        chrome.runtime.sendMessage({
+                action: "analyzeScreenshot",
+                imgUrl,
+                selectedTone
+            },
+            (response) => {
+                const output = document.getElementById("explanation-container");
+                output!.textContent = response?.answer || "No response from Gemini.";
+            }
+        )
+
         document.body.appendChild(img);
     } catch (error) {
         console.error("screenshot failed", error);
