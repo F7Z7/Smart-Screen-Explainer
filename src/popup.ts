@@ -45,10 +45,15 @@ async function captureScreenshot(): Promise<void> {
         stream.getTracks().forEach((track) => track.stop());
 
         const imgUrl = canvas.toDataURL("image/png");
+        let imageContaier = document.getElementById("ImageContainer") as HTMLDivElement;
         const img = document.createElement("img");
         img.src = imgUrl;
         img.style.maxWidth = "100%";
         img.style.border = "1px solid #ccc";
+        imageContaier.appendChild(img);
+        if(img){
+            imageContaier.classList.add("displayImage");
+        }
 
         const personalitySelect = document.getElementById("personalitySelect") as HTMLSelectElement;
         const selectedTone = personalitySelect?.value || "default";
@@ -64,7 +69,7 @@ async function captureScreenshot(): Promise<void> {
             }
         )
 
-        document.body.appendChild(img);
+        ;
     } catch (error) {
         console.error("screenshot failed", error);
     }
