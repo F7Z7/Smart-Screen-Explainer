@@ -60,7 +60,12 @@ async function captureScreenshot(): Promise<void> {
         console.error("screenshot failed", error);
     }
 }
+document.addEventListener("DOMContentLoaded", ()=>{
 
+    document.querySelectorAll<HTMLButtonElement>(".explain-btn").forEach(button => {
+        button.addEventListener("click", () => getExplanation(button));
+    });
+})
 
 function getExplanation(button: HTMLButtonElement) {
     if (!imgUrl) {
@@ -69,7 +74,7 @@ function getExplanation(button: HTMLButtonElement) {
     }
 
     const selectedTone = button.innerText.trim();
-
+    console.log(selectedTone);
     chrome.runtime.sendMessage(
         {
             action: "analyzeScreenshot",
