@@ -94,7 +94,7 @@ function getExplanation(button: HTMLButtonElement) {
         {
             action: "analyzeScreenshot",
             imgUrl,
-            selectedTone
+            selectedTone:selectedTone
         },
         (response) => {
             const output = document.getElementById("explanation-container") as HTMLDivElement || null;
