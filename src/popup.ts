@@ -66,7 +66,22 @@ document.addEventListener("DOMContentLoaded", ()=>{
         button.addEventListener("click", () => getExplanation(button));
     });
 })
+function deleteScreenshot(){
+    const imageContaier = document.getElementById("ImageContainer") as HTMLDivElement;
 
+   if(!imgUrl || !imageContaier.classList.contains("displayImage")){
+       alert("No screenshot found!");
+   }
+   const img=imageContaier.querySelectorAll("img");
+   img.forEach(img => {
+       img.remove();
+   })
+    imgUrl = "";
+   imageContaier.classList.remove("displayImage");
+
+    console.log("Screenshot deleted successfully.");
+
+}
 function getExplanation(button: HTMLButtonElement) {
     if (!imgUrl) {
         alert("Please take a screenshot first!");
@@ -93,5 +108,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const button = document.getElementById("btn") as HTMLButtonElement | null;
     if (button) {
         button.addEventListener("click", captureScreenshot);
+    }
+    const deleteButton = document.getElementById("delete-btn") as HTMLButtonElement | null;
+    if (deleteButton) {
+        deleteButton.addEventListener("click", deleteScreenshot);
     }
 });
