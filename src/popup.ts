@@ -22,6 +22,7 @@ document.getElementById("saveKey")?.addEventListener("click", async () => {
         console.error("Failed to save API key:", err);
     }
 });
+let imgUrl = "";
 
 async function captureScreenshot(): Promise<void> {
     try {
@@ -44,36 +45,44 @@ async function captureScreenshot(): Promise<void> {
 
         stream.getTracks().forEach((track) => track.stop());
 
-        const imgUrl = canvas.toDataURL("image/png");
+        imgUrl = canvas.toDataURL("image/png");
         let imageContaier = document.getElementById("ImageContainer") as HTMLDivElement;
         const img = document.createElement("img");
         img.src = imgUrl;
         img.style.maxWidth = "100%";
         img.style.border = "1px solid #ccc";
         imageContaier.appendChild(img);
-        if(img){
+        if (img) {
             imageContaier.classList.add("displayImage");
         }
 
-        const personalitySelect = document.getElementById("personalitySelect") as HTMLSelectElement;
-        const selectedTone = personalitySelect?.value || "default";
-
-        chrome.runtime.sendMessage({
-                action: "analyzeScreenshot",
-                imgUrl,
-                selectedTone
-            },
-            (response) => {
-                const output = document.getElementById("explanation-container");
-                output!.textContent = response?.answer || "No response from Gemini.";
-            }
-        )
-
-        ;
     } catch (error) {
         console.error("screenshot failed", error);
     }
 }
+
+
+function getExplanation(button: HTMLButtonElement) {
+    if (!imgUrl) {
+        alert("Please take a screenshot first!");
+        return;
+    }
+
+    const selectedTone = button.innerText.trim();
+
+    chrome.runtime.sendMessage(
+        {
+            action: "analyzeScreenshot",
+            imgUrl,
+            selectedTone
+        },
+        (response) => {
+            const output = document.getElementById("explanation-container") as HTMLDivElement || null;
+            output.textContent = response?.answer || "No response from Gemini.";
+        }
+    );
+}
+
 
 document.addEventListener("DOMContentLoaded", () => {
     const button = document.getElementById("btn") as HTMLButtonElement | null;
