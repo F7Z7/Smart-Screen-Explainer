@@ -10,13 +10,13 @@ document.getElementById("saveKey")?.addEventListener("click", async () => {
     }
     try {
         await chrome.storage.local.set({geminiApiKey: key});
-        alert("API key saved successfully!");
+        // alert("API key saved successfully!");
 
         // Optionally clear the UI
         input?.remove();
         button?.remove();
 
-        alert("api key saved successfully!");
+        // alert("api key saved successfully!");
 
     } catch (err) {
         console.error("Failed to save API key:", err);
@@ -97,6 +97,7 @@ function getExplanation(button: HTMLButtonElement) {
             selectedTone:selectedTone
         },
         (response) => {
+            console.log("ivde vanno")
             const output = document.getElementById("explanation-container") as HTMLDivElement || null;
             output.textContent = response?.answer || "No response from Gemini.";
         }
