@@ -1,12 +1,30 @@
 {
-  "name": "Screen Explainer",
-  "description": "A screen explainer powered by ai",
-  "version": "1.0",
   "manifest_version": 3,
-  "action": {
-    "default_popup": "src/popup.html"
-  },
+  "name": "Screen Explainer",
+  "description": "A screen explainer powered by Gemini AI",
+  "version": "1.0",
+
+  "permissions": [
+    "storage",
+    "activeTab",
+    "scripting"
+  ],
+
   "host_permissions": [
     "https://generativelanguage.googleapis.com/"
-  ]
+  ],
+
+  "background": {
+    "service_worker": "dist/background.js",
+    "type": "module"
+  },
+
+  "action": {
+    "default_popup": "dist/popup.html",
+    "default_title": "Screen Explainer"
+  },
+
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self';"
+  }
 }
