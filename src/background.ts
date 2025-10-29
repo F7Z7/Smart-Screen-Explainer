@@ -29,7 +29,7 @@ async function geminiCall(imgUrl: string, selectedTone: string): Promise<string>
     }
 
 
-    const ai = GoogleGenAI({apiKey: geminiApiKey});
+    const ai = new GoogleGenAI({apiKey: geminiApiKey});
 
     const [mimeTypePart, base64Part] = imgUrl.split(",");
     const Image64 = base64Part
