@@ -1,13 +1,16 @@
 //@ts-ignore
 import {GoogleGenAI} from "@google/genai";
 
+console.log("here1")
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 
     if (request.action === "analyzeScreenshot") {
 
         geminiCall(request.imgUrl, request.selectedTone)
-            .then(result => {
-                sendResponse({result});
+            .then(answer => {
+                console.log("here2")
+
+                sendResponse({answer});
             })
             .catch(err => {
                 console.error("Error analyzing image:", err);
@@ -22,6 +25,8 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 // @ts-ignore
 async function geminiCall(imgUrl: string, selectedTone: string): Promise<string> {
     const result = await chrome.storage.local.get("geminiApiKey");
+    console.log("here3")
+
     const geminiApiKey: string | undefined = result.geminiApiKey;
 
     if (!geminiApiKey) {
@@ -46,26 +51,27 @@ async function geminiCall(imgUrl: string, selectedTone: string): Promise<string>
     };
 
     const personality = tonePrompts[selectedTone];
+    console.log("here4")
+
 
     try {
-        const response = ai.generateContent({
+        const response = await ai.generateContent({
             model: "gemini-2.5-flash",
             contents: [
                 {
                     role: "user",
                     parts: [
-                        {text: "Analyze the image and respond to the following instruction."},
-                        {inlineData: {data: Image64, mimeType: mimeType}},
+                        { text: `${personality}\nNow analyze this image:` },
+                        { inlineData: { data: Image64, mimeType } },
                     ],
-                }
+                },
             ],
-            config: {
-                systemInstruction: personality,
+            generationConfig: {
                 temperature: 0.8,
                 candidateCount: 1,
+            },
+        });
 
-            }
-        })
         return response.text.trim()
     } catch (err) {
         console.error("Gemini API call failed:", err);
