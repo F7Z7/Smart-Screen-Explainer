@@ -1,5 +1,5 @@
 //@ts-ignore
-import {GoogleGenAI} from "@google/genai";
+// import {GoogleGenAI} from "@google/genai";
 
 console.log("here1")
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
@@ -34,7 +34,8 @@ async function geminiCall(imgUrl: string, selectedTone: string): Promise<string>
     }
 
 
-    const ai = new GoogleGenAI({apiKey: geminiApiKey});
+    // const ai = new GoogleGenAI({apiKey: geminiApiKey});
+    // const model = ai.getGenerativeModel({ model: "gemini-2.5-flash" });
 
     const [mimeTypePart, base64Part] = imgUrl.split(",");
     const Image64 = base64Part
@@ -54,27 +55,32 @@ async function geminiCall(imgUrl: string, selectedTone: string): Promise<string>
     console.log("here4")
 
 
-    try {
-        const response = await ai.generateContent({
-            model: "gemini-2.5-flash",
+
+        const payload = {
             contents: [
                 {
-                    role: "user",
                     parts: [
                         { text: `${personality}\nNow analyze this image:` },
-                        { inlineData: { data: Image64, mimeType } },
-                    ],
-                },
-            ],
-            generationConfig: {
-                temperature: 0.8,
-                candidateCount: 1,
-            },
-        });
+                        { inlineData: { mimeType, data: Image64 } }
+                    ]
+                }
+            ]
+        };
 
-        return response.text.trim()
+    try {
+        const response = await fetch(
+            `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${geminiApiKey}`,
+            {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(payload)
+            }
+        );
+
+        const data = await response.json();
+        return data.candidates?.[0]?.content?.parts?.[0]?.text || "No response from Gemini.";
     } catch (err) {
         console.error("Gemini API call failed:", err);
-        return "Error: Failed to analyze image. Check console for details.";
+        return "Error: Gemini API call failed.";
     }
 }
