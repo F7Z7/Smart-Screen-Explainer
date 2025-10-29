@@ -68,6 +68,7 @@ async function geminiCall(imgUrl: string, selectedTone: string): Promise<string>
         };
 
     try {
+        console.log("heheheh")
         const response = await fetch(
             `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${geminiApiKey}`,
             {
@@ -78,6 +79,7 @@ async function geminiCall(imgUrl: string, selectedTone: string): Promise<string>
         );
 
         const data = await response.json();
+        console.log(data)
         return data.candidates?.[0]?.content?.parts?.[0]?.text || "No response from Gemini.";
     } catch (err) {
         console.error("Gemini API call failed:", err);
