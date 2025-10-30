@@ -65,4 +65,5 @@ The immediate next steps for the Smart Screen Explainer are focused on increasin
 
 - **Expanded Features:** Adding capabilities like text extraction (OCR) from the image and the ability to ask follow-up questions within the popup interface.
 
-
+## Ouput
+<a href="https://youtu.be/_2r7-BMg0WM"> Sample Output Video</a>
