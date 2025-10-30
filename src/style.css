@@ -232,3 +232,6 @@ button {
     color: #666;
     font-style: italic;
 }
+#explanation-container {
+    transition: opacity 0.5s ease-in-out;
+}
