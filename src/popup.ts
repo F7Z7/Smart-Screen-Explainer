@@ -97,9 +97,25 @@ function getExplanation(button: HTMLButtonElement) {
             selectedTone:selectedTone
         },
         (response) => {
-            console.log("ivde vanno")
+            let waiting_message=["Analayzing your Image","Drafting Your Response ","Hang On","A few seconds left"]
+            const output = document.getElementById("explanation-container") as HTMLDivElement || null;
+
+            let i=0;
+            const interval = setInterval(() => {
+                output.textContent=waiting_message[i%waiting_message.length];
+                i++;
+            },1500)
+            if(response){
+            clearInterval(interval);
             const output = document.getElementById("explanation-container") as HTMLDivElement || null;
             output.textContent = response?.answer || "No response from Gemini.";
+                }
+            else {
+                setTimeout(() => {
+                    clearInterval(interval);
+                    output.textContent = "No response received. Please try again.";
+                }, 15000);
+            }
         }
     );
 }
