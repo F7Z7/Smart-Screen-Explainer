@@ -152,3 +152,7 @@ npm run watch
 
 ### Sample Screenshots
 
+| Interface | Explanation |
+|:----------:|:------------:|
+| ![Interface](assets/interface.png) | ![Explanation](assets/explanation.png) |
+
