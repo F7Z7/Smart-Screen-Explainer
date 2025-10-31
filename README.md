@@ -65,5 +65,90 @@ The immediate next steps for the Smart Screen Explainer are focused on increasin
 
 - **Expanded Features:** Adding capabilities like text extraction (OCR) from the image and the ability to ask follow-up questions within the popup interface.
 
+## How to use 
+
+### Clone the repo 
+```bash
+git clone https://github.com/F7Z7/Smart-Screen-Explainer.git
+```
+
+### Go to repo 
+
+```
+cd Smart-Screen-Explainer
+```
+
+### Install Dependencies
+After cloning the repository, install all the required packages using npm:
+
+```
+npm install
+```
+
+### Build the Extension
+
+```
+npm run watch
+```
+
+### Load the Extension in Chrome
+
+- Open Google Chrome.
+
+- Go to chrome://extensions/.
+
+- Enable Developer mode (toggle in the top-right corner).
+
+- Click "Load unpacked".
+
+- Select the project folder — the one containing the manifest.json file.
+
+- The Screen Explainer extension will now appear in your extensions bar.
+
+### Add Your Gemini API Key
+- Click on the Screen Explainer icon in the toolbar.
+
+- Enter your Gemini API key in the input box.
+
+- Click Save Key — it will be securely stored in Chrome’s local storage.
+
+  - If you don’t have one, create a free Gemini API key from <a href=" https://aistudio.google.com/app/apikey"> Google AI Studio </a>
+  
+### Use the Extension
+- Open any webpage.
+
+- Click the Screen Explainer icon.
+
+- The extension will capture the visible area and select a personality for explanation and wait for some time.
+  - The personalities include
+    - Explain like I'm 5
+    - Teacher
+    - Sarcastic
+    - Ai Friend
+    - College Student
+    
+- Gemini will return the explanation with the personality choosen by user 
+
+- You’ll see explanations or summaries appear inside the popup interface.
+
+### Development Notes
+
+- All source files are inside the <strong>src/</strong> folder.
+
+- Built JS files are generated in <strong> dist </strong>.
+
+- <strong> manifest.json</strong> handles permissions and entry points.
+
+- The extension uses:
+
+  - TypeScript for source code
+
+  - esbuild for bundling
+
+  - Gemini API for AI-powered analysis
+
 ## Ouput
 <a href="https://youtu.be/_2r7-BMg0WM"> Sample Output Video</a>
+
+### Sample Screenshots
+
