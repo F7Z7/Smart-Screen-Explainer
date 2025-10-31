@@ -19,7 +19,7 @@ The Smart Screen Explainer is a Chrome extension that turns any visual content o
 
 The application effectively serves as an instant "on-screen tutor" for diagrams, complex tables, interface elements, or any visual information a user needs clarified.
 
-## How we built it
+## How I built it
 
 - **The project was built as a Chrome Extension**, using a modern web stack tailored for browser environments:
 
