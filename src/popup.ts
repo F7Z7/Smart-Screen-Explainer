@@ -1,27 +1,42 @@
-document.getElementById("saveKey")?.addEventListener("click", async () => {
+document.addEventListener("DOMContentLoaded", async () => {
+    const container = document.getElementById("container");
     const input = document.getElementById("apiKeyInput") as HTMLInputElement | null;
     const button = document.getElementById("saveKey");
-    const key = (input?.value || "").trim();
 
 
-    if (!key) {
-        alert("Please enter a valid API key.");
-        return;
+    const result = await chrome.storage.local.get("geminiApiKey");
+    const savedKey = result.geminiApiKey;
+
+    if (savedKey) {
+        console.log("API key already saved, hiding input...");
+        if (container) container.style.display = "none";
+
     }
-    try {
-        await chrome.storage.local.set({geminiApiKey: key});
-        // alert("API key saved successfully!");
 
-        // Optionally clear the UI
-        input?.remove();
-        button?.remove();
 
-        // alert("api key saved successfully!");
+    button?.addEventListener("click", async () => {
+        const key = (input?.value || "").trim();
 
-    } catch (err) {
-        console.error("Failed to save API key:", err);
-    }
+        if (!key) {
+            alert("Please enter a valid API key.");
+            return;
+        }
+
+        try {
+            await chrome.storage.local.set({ geminiApiKey: key });
+
+            console.log("API key saved successfully!");
+            if (container) container.style.display = "none";
+
+
+        } catch (err) {
+            console.error("Failed to save API key:", err);
+        }
+    });
 });
+
+
+
 let imgUrl = "";
 
 async function captureScreenshot(): Promise<void> {
@@ -60,56 +75,58 @@ async function captureScreenshot(): Promise<void> {
         console.error("screenshot failed", error);
     }
 }
-document.addEventListener("DOMContentLoaded", ()=>{
+
+document.addEventListener("DOMContentLoaded", () => {
 
     document.querySelectorAll<HTMLButtonElement>(".explain-btn").forEach(button => {
         button.addEventListener("click", () => getExplanation(button));
     });
 })
-function deleteScreenshot(){
+
+function deleteScreenshot() {
     const imageContaier = document.getElementById("ImageContainer") as HTMLDivElement;
 
-   if(!imgUrl || !imageContaier.classList.contains("displayImage")){
-       alert("No screenshot found!");
-   }
-   const img=imageContaier.querySelectorAll("img");
-   img.forEach(img => {
-       img.remove();
-   })
+    if (!imgUrl || !imageContaier.classList.contains("displayImage")) {
+        alert("No screenshot found!");
+    }
+    const img = imageContaier.querySelectorAll("img");
+    img.forEach(img => {
+        img.remove();
+    })
     imgUrl = "";
-   imageContaier.classList.remove("displayImage");
+    imageContaier.classList.remove("displayImage");
 
     console.log("Screenshot deleted successfully.");
 
 }
+
 function getExplanation(button: HTMLButtonElement) {
     if (!imgUrl) {
         alert("Please take a screenshot first!");
         return;
     }
-    let waiting_message=["Analayzing your Image","Drafting Your Response ","Hang On","A few seconds left"]
+    let waiting_message = ["Analayzing your Image", "Drafting Your Response ", "Hang On", "A few seconds left"]
     const output = document.getElementById("explanation-container") as HTMLDivElement || null;
 
-    let i=0;
+    let i = 0;
     const interval = setInterval(() => {
-        output.textContent=waiting_message[i%waiting_message.length];
+        output.textContent = waiting_message[i % waiting_message.length];
         i++;
-    },5000)
+    }, 5000)
     const selectedTone = button.innerText.trim();
     console.log(selectedTone);
     chrome.runtime.sendMessage(
         {
             action: "analyzeScreenshot",
             imgUrl,
-            selectedTone:selectedTone
+            selectedTone: selectedTone
         },
         (response) => {
-            if(response){
-            clearInterval(interval);
-            const output = document.getElementById("explanation-container") as HTMLDivElement || null;
-            output.textContent = response?.answer || "No response from Gemini.";
-                }
-            else {
+            if (response) {
+                clearInterval(interval);
+                const output = document.getElementById("explanation-container") as HTMLDivElement || null;
+                output.textContent = response?.answer || "No response from Gemini.";
+            } else {
                 setTimeout(() => {
                     clearInterval(interval);
                     output.textContent = "No response received. Please try again.";
