@@ -1,7 +1,7 @@
 //@ts-ignore
 // import {GoogleGenAI} from "@google/genai";
 
-log("here1")
+
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 
     if (request.action === "analyzeScreenshot") {
