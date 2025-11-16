@@ -43,12 +43,11 @@ async function geminiCall(imgUrl: string, selectedTone: string): Promise<string>
 
     //
     const tonePrompts: Record<string, string> = {
-        "Explain like I'm 5": "Explain this image in simple, child-friendly language.",
-        "Teacher": "Explain this image as a teacher would, clearly and informatively.",
-        "Sarcastic": "Explain this image in a sarcastic or humorous tone.",
-        "Ai Friend": "Explain like a chat bot",
-        "College Student": "Explain like college student student"
-
+        "Explain like I'm 5": "Explain this image using the simplest language and analogies a 5-year-old would understand. Keep the explanation short, friendly, and focus on the main parts.",
+        "Teacher": "Act as a university professor. Provide a structured, detailed, and objective explanation of the image. Identify core components, define key terms, and use a pedagogical tone. Format the explanation with a heading and bullet points.",
+        "Sarcastic": "Explain this image using heavy, dry wit and extreme sarcasm. Act bored, overly critical, or completely unimpressed by the content. Do not hold back on the humor.",
+        "Ai Friend": "Explain the image in a friendly, conversational, and supportive tone, similar to a modern AI assistant. Use bold formatting for important words and keep the explanation helpful and encouraging.",
+        "College Student": "Act like a stressed college student summarizing a complex topic for a test. Explain the image quickly, focusing only on the most essential information and main takeaways. Use very informal and slightly hurried language."
     };
 
     const personality = tonePrompts[selectedTone];
