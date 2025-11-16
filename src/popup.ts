@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     const savedKey = result.geminiApiKey;
 
     if (savedKey) {
-        console.log("API key already saved, hiding input...");
+        ("API key already saved, hiding input...");
         if (container) container.style.display = "none";
 
     }
@@ -25,7 +25,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         try {
             await chrome.storage.local.set({ geminiApiKey: key });
 
-            console.log("API key saved successfully!");
+            ("API key saved successfully!");
             if (container) container.style.display = "none";
 
 
@@ -96,7 +96,7 @@ function deleteScreenshot() {
     imgUrl = "";
     imageContaier.classList.remove("displayImage");
 
-    console.log("Screenshot deleted successfully.");
+    ("Screenshot deleted successfully.");
 
 }
 
@@ -114,7 +114,7 @@ function getExplanation(button: HTMLButtonElement) {
         i++;
     }, 5000)
     const selectedTone = button.innerText.trim();
-    console.log(selectedTone);
+    (selectedTone);
     chrome.runtime.sendMessage(
         {
             action: "analyzeScreenshot",

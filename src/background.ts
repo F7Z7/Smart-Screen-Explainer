@@ -1,14 +1,14 @@
 //@ts-ignore
 // import {GoogleGenAI} from "@google/genai";
 
-console.log("here1")
+log("here1")
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 
     if (request.action === "analyzeScreenshot") {
 
         geminiCall(request.imgUrl, request.selectedTone)
             .then(answer => {
-                console.log("here2")
+                ("here2")
 
                 sendResponse({answer});
             })
@@ -25,7 +25,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 // @ts-ignore
 async function geminiCall(imgUrl: string, selectedTone: string): Promise<string> {
     const result = await chrome.storage.local.get("geminiApiKey");
-    console.log("here3")
+    ("here3")
 
     const geminiApiKey: string | undefined = result.geminiApiKey;
 
@@ -51,7 +51,7 @@ async function geminiCall(imgUrl: string, selectedTone: string): Promise<string>
     };
 
     const personality = tonePrompts[selectedTone];
-    console.log("here4")
+    ("here4")
 
 
 
@@ -67,7 +67,7 @@ async function geminiCall(imgUrl: string, selectedTone: string): Promise<string>
         };
 
     try {
-        console.log("heheheh")
+        ("heheheh")
         const response = await fetch(
             `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${geminiApiKey}`,
             {
@@ -78,7 +78,7 @@ async function geminiCall(imgUrl: string, selectedTone: string): Promise<string>
         );
 
         const data = await response.json();
-        console.log(data)
+        (data)
         return data.candidates?.[0]?.content?.parts?.[0]?.text || "No response from Gemini.";
     } catch (err) {
         console.error("Gemini API call failed:", err);
