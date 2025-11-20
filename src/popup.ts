@@ -85,6 +85,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
 function deleteScreenshot() {
     const imageContaier = document.getElementById("ImageContainer") as HTMLDivElement;
+    const explanationContainer = document.getElementById("explanation-container") as HTMLDivElement;
+    explanationContainer.innerHTML = "";
+    explanationContainer.style.display = "none";
 
     if (!imgUrl || !imageContaier.classList.contains("displayImage")) {
         alert("No screenshot found!");
@@ -96,7 +99,7 @@ function deleteScreenshot() {
     imgUrl = "";
     imageContaier.classList.remove("displayImage");
 
-    ("Screenshot deleted successfully.");
+
 
 }
 
